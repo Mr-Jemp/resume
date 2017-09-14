@@ -1,0 +1,11 @@
+.App {
+  font-family: monospace;
+    white-space: pre-wrap;
+    outline: 0;
+    height:500px;
+    width:100%;
+    left:0;
+}
+body{
+    width:100%
+}
