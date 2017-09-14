@@ -155,7 +155,7 @@ const resume = `jkb
 `
 var currentStyle = ''
 var currentMarkdown = ''
-let speed = 50
+let speed = 30
 
 class App extends Component {
   constructor(...prop) {
