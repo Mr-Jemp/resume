@@ -15,12 +15,12 @@ const styleText = [
 * {
   transition: all 1s;
 }
-/* 白色背景太单调了，我们来点背景 */
+/* 我们来加点背景 */
 html {
   color: rgb(222,222,222); 
   background: rgb(0,43,54);
 }
-/* 文字离边框太近了 */
+/* 调整一下文字距离 */
 .styleEditor {
   padding: .5em;
   border: 1px solid;
@@ -29,13 +29,13 @@ html {
   width: 45vw; 
   height: 90vh;
 }
-/* 代码高亮 */
+/* 代码逼格调一下 */
 .token.selector{ color: rgb(133,153,0); }
 .token.property{ color: rgb(187,137,0); }
 .token.punctuation{ color: yellow; }
 .token.function{ color: rgb(42,161,152); }
 
-/* 加点 3D 效果呗 */
+/* 加点特效 */
 html{
   perspective: 1000px;
 }
@@ -46,7 +46,7 @@ html{
   -webkit-transform: rotateY(10deg) translateZ(-100px) ;
           transform: rotateY(10deg) translateZ(-100px) ;
 }
-/* 接下来我给自己准备一个编辑器 */
+/* 接下来准备一个编辑器 */
 .resumeEditor{
   white-space: normal;
   position: fixed; right: 0; top: 0;
@@ -58,9 +58,9 @@ html{
 }
 /* 好了，我开始写简历了 */
 `,
-  `/* 这个简历好像差点什么
- * 对了，这是 Markdown 格式的，我需要变成对 HR 更友好的格式
- * 简单，用开源工具翻译成 HTML 就行了
+  `/* 这个简历好像还有点问题
+ * emmmm..这是 Markdown 格式的，我需要变成对 HR 更友好的格式
+ * 翻译一下
  */
 `,
   `
@@ -107,7 +107,12 @@ const resume = `jkb
 2. 天津九安医疗电子股份有限公司(Android开发实习)
 链接
 ----
+
 * [GitHub](https://github.com/spinjkb)
+
+不来点个赞吗
+----
+![](http://wx2.sinaimg.cn/mw690/70b9a995gy1fja8oqeojhg206e06eb07.gif =100x100)
 `
 var currentStyle = ''
 var currentMarkdown = ''
@@ -131,7 +136,7 @@ class App extends Component {
   }
   ShowStyle(n) {
     return new Promise((resolve, reject) => {
-      let interval = 40
+      let interval = 1
       let showStyle = (async function () {
         let style = styleText[n]
         if (!style) { return }
@@ -154,7 +159,7 @@ class App extends Component {
   ShowResume() {
     return new Promise((resolve, reject) => {
       let length = resume.length
-      let interval = 50
+      let interval = 1
       let showResumeMd = () => {
         if (currentMarkdown.length < length) {
           let i = currentMarkdown.length
