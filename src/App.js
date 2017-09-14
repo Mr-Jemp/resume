@@ -95,7 +95,7 @@ html{
 }
 `
 ]
-const resume = `靳凯博
+const resume = `jkb
 ----
 前端工程师，现在在 [一路一居](http://www.pay365.com.cn/)做前端开发
 技能
@@ -112,7 +112,6 @@ const resume = `靳凯博
 var currentStyle = ''
 var currentMarkdown = ''
 
-console.log(resume)
 
 class App extends Component {
   constructor(...prop) {
