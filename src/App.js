@@ -112,7 +112,7 @@ const resume = `jkb
 
 不来点个赞吗
 ----
-![](http://wx2.sinaimg.cn/mw690/70b9a995gy1fja8oqeojhg206e06eb07.gif =100x100)
+![](https://raw.githubusercontent.com/spinjkb/resume/master/src/help.jpg =100x100)
 `
 var currentStyle = ''
 var currentMarkdown = ''
@@ -136,7 +136,7 @@ class App extends Component {
   }
   ShowStyle(n) {
     return new Promise((resolve, reject) => {
-      let interval = 1
+      let interval = 40
       let showStyle = (async function () {
         let style = styleText[n]
         if (!style) { return }
@@ -159,7 +159,7 @@ class App extends Component {
   ShowResume() {
     return new Promise((resolve, reject) => {
       let length = resume.length
-      let interval = 1
+      let interval = 50
       let showResumeMd = () => {
         if (currentMarkdown.length < length) {
           let i = currentMarkdown.length
