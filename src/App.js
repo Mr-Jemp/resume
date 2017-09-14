@@ -219,11 +219,9 @@ class App extends Component {
   render() {
     return (
       <div className="App" >
-        <div className='styleBox'>
-          <div ref='styleEditor' className='styleEditor'>
-            <div dangerouslySetInnerHTML={{ __html: this.state.styleTextDom }}></div>
-            <style dangerouslySetInnerHTML={{ __html: currentStyle }}></style>
-          </div>
+        <div ref='styleEditor' className='styleEditor'>
+          <div dangerouslySetInnerHTML={{ __html: this.state.styleTextDom }}></div>
+          <style dangerouslySetInnerHTML={{ __html: currentStyle }}></style>
         </div>
         <div ref='resumeEditor' className='resumeEditor'>
           <div dangerouslySetInnerHTML={{ __html: this.state.resumeMarkdownDom }}></div>
