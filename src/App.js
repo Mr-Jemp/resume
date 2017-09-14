@@ -5,7 +5,7 @@ import './App.css'
 
 const styleText = [
   `/*
-* Inspired by http://strml.net
+* Inspired by http://strml.net https://zhuanlan.zhihu.com/p/25202080 https://zhuanlan.zhihu.com/p/29134444
 * 大家好，我是jkb
 * 九月了，看到很多公司都在招聘，你们是不是都在准备简历。
 * 那我也来写一份简历！
@@ -18,16 +18,30 @@ const styleText = [
 /* 我们来加点背景 */
 html {
   color: rgb(222,222,222); 
-  background: rgb(0,43,54);
+  background: rgb(63,82,99);
 }
 /* 调整一下文字距离 */
-.styleEditor {
-  padding: .5em;
-  border: 1px solid;
-  margin: .5em;
-  overflow: auto;
-  width: 45vw; 
-  height: 90vh;
+@media (min-width:500px){
+  .styleEditor {
+    padding: .5em;
+    border: 1px solid;
+    margin: .5em;
+    overflow: auto;
+    width: 45vw; 
+    height: 90vh;
+    background: rgb(48, 48, 48);
+  }
+}
+@media screen and (min-width: 320px) and (max-width: 480px) {
+  .styleEditor{
+    padding: .5em;
+    border: 1px solid;
+    margin: .5em;
+    overflow: auto;
+    width: 100vw;
+    height: 45vh;
+    background: rgb(48, 48, 48);
+  }
 }
 /* 代码逼格调一下 */
 .token.selector{ color: rgb(133,153,0); }
@@ -45,16 +59,41 @@ html{
   transition: none;
   -webkit-transform: rotateY(10deg) translateZ(-100px) ;
           transform: rotateY(10deg) translateZ(-100px) ;
+  
+}
+/* 边框竟然有马赛克
+* emmmmmm.
+* 改一改 
+* 假装去掉了马赛克
+*/
+.styleEditor {
+  box-shadow: 0px 0px 10px rgba(255,255,255,0.4);
 }
 /* 接下来准备一个编辑器 */
-.resumeEditor{
-  white-space: normal;
-  position: fixed; right: 0; top: 0;
-  padding: .5em;  margin: .5em;
-  width: 48vw; height: 90vh;
-  border: 1px solid;
-  background: white; color: #222;
-  overflow: auto;
+@media(min-width: 500px) {
+  .resumeEditor{
+    white-space: normal;
+    position: fixed; right: 0; top: 0;
+    padding: .5em;  margin: .5em;
+    width: 48vw; 
+    height: 90vh;
+    border: 1px solid;
+    background: white; color: #222;
+    overflow: auto;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 480px) {
+  .resumeEditor{
+    white-space: normal;
+    position: fixed; left: 0; top: 50vh;
+    padding: .5em;  margin: .5em;
+    width: 90vw; 
+    height: 45vh;
+    border: 1px solid;
+    background: white; color: #222;
+    overflow: auto;
+  }
 }
 /* 好了，我开始写简历了 */
 `,
@@ -103,7 +142,7 @@ const resume = `jkb
 * 前端开发
 工作经历
 ----
-1. [一路一居](http://www.pay365.com.cn/)
+1. 北京东方瑞科[一路一居](http://www.pay365.com.cn/)
 2. 天津九安医疗电子股份有限公司(Android开发实习)
 链接
 ----
@@ -116,7 +155,7 @@ const resume = `jkb
 `
 var currentStyle = ''
 var currentMarkdown = ''
-
+let speed = 50
 
 class App extends Component {
   constructor(...prop) {
@@ -136,15 +175,15 @@ class App extends Component {
   }
   ShowStyle(n) {
     return new Promise((resolve, reject) => {
-      let interval = 40
+      let interval = speed
       let showStyle = (async function () {
         let style = styleText[n]
         if (!style) { return }
         let length = styleText.filter((_, index) => index <= n).map((item) => item.length).reduce((p, c) => p + c, 0)
         let prefixLength = length - style.length
         if (currentStyle.length < length) {
-          let l = currentStyle.length - prefixLength
-          let char = style.substring(l, l + 1) || ' '
+          let i = currentStyle.length - prefixLength
+          let char = style.substring(i, i + 1) || ' '
           currentStyle += char
           this.setState({ styleTextDom: Prism.highlight(currentStyle, Prism.languages.css) })
           this.refs.styleEditor.scrollTop = this.refs.styleEditor.scrollHeight
@@ -159,7 +198,7 @@ class App extends Component {
   ShowResume() {
     return new Promise((resolve, reject) => {
       let length = resume.length
-      let interval = 50
+      let interval = speed
       let showResumeMd = () => {
         if (currentMarkdown.length < length) {
           let i = currentMarkdown.length
@@ -180,9 +219,11 @@ class App extends Component {
   render() {
     return (
       <div className="App" >
-        <div ref='styleEditor' className='styleEditor'>
-          <div dangerouslySetInnerHTML={{ __html: this.state.styleTextDom }}></div>
-          <style dangerouslySetInnerHTML={{ __html: currentStyle }}></style>
+        <div className='styleBox'>
+          <div ref='styleEditor' className='styleEditor'>
+            <div dangerouslySetInnerHTML={{ __html: this.state.styleTextDom }}></div>
+            <style dangerouslySetInnerHTML={{ __html: currentStyle }}></style>
+          </div>
         </div>
         <div ref='resumeEditor' className='resumeEditor'>
           <div dangerouslySetInnerHTML={{ __html: this.state.resumeMarkdownDom }}></div>
@@ -191,8 +232,4 @@ class App extends Component {
     );
   }
 }
-
-// <div dangerouslySetInnerHTML={{ __html: currentStyle }}></div>
-// <style dangerouslySetInnerHTML={{ __html: this.state.DOMStyleText }}></style>
-// <div> {this.state.styleText}</div>
 export default App;
