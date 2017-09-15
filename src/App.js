@@ -21,26 +21,23 @@ html {
   background: rgb(63,82,99);
 }
 /* 调整一下文字距离 */
-@media (min-width:500px){
-  .styleEditor {
-    padding: .5em;
+.styleEditor {
+  padding: .5em;
     border: 1px solid;
     margin: .5em;
     overflow: auto;
+    background: rgb(48, 48, 48);
+}
+@media (min-width:500px){
+  .styleEditor {
     width: 45vw; 
     height: 90vh;
-    background: rgb(48, 48, 48);
   }
 }
 @media screen and (min-width: 320px) and (max-width: 480px) {
   .styleEditor{
-    padding: .5em;
-    border: 1px solid;
-    margin: .5em;
-    overflow: auto;
     width: 100vw;
     height: 45vh;
-    background: rgb(48, 48, 48);
   }
 }
 /* 代码逼格调一下 */
@@ -70,29 +67,27 @@ html{
   box-shadow: 0px 0px 10px rgba(255,255,255,0.4);
 }
 /* 接下来准备一个编辑器 */
-@media(min-width: 500px) {
-  .resumeEditor{
+ .resumeEditor{
     white-space: normal;
-    position: fixed; right: 0; top: 0;
     padding: .5em;  margin: .5em;
-    width: 48vw; 
-    height: 90vh;
     border: 1px solid;
     background: white; color: #222;
     overflow: auto;
+ }
+@media(min-width: 500px) {
+  .resumeEditor{
+    position: fixed; right: 0; top: 0;
+    width: 48vw; 
+    height: 90vh;
   }
 }
 
 @media screen and (min-width: 320px) and (max-width: 480px) {
   .resumeEditor{
-    white-space: normal;
     position: fixed; left: 0; top: 50vh;
     padding: .5em;  margin: .5em;
     width: 90vw; 
     height: 45vh;
-    border: 1px solid;
-    background: white; color: #222;
-    overflow: auto;
   }
 }
 /* 好了，我开始写简历了 */
@@ -151,11 +146,15 @@ const resume = `jkb
 
 不来点个赞吗
 ----
+* [源码地址](https://github.com/spinjkb/resume)
+
 ![](https://raw.githubusercontent.com/spinjkb/resume/master/src/help.jpg =100x100)
 `
 var currentStyle = ''
 var currentMarkdown = ''
-let speed = 30
+let speed = 25
+let nowLength = 0
+let allLength = 0
 
 class App extends Component {
   constructor(...prop) {
@@ -176,19 +175,24 @@ class App extends Component {
   ShowStyle(n) {
     return new Promise((resolve, reject) => {
       let interval = speed
+      for (let i = 0; i <= n; i++) {
+        allLength += styleText[i].length 
+      }
       let showStyle = (async function () {
         let style = styleText[n]
         if (!style) { return }
-        let length = styleText.filter((_, index) => index <= n).map((item) => item.length).reduce((p, c) => p + c, 0)
-        let prefixLength = length - style.length
-        if (currentStyle.length < length) {
-          let i = currentStyle.length - prefixLength
+        //这次要插入的长度
+        nowLength = allLength - style.length
+        if (currentStyle.length < allLength) {
+          let i = currentStyle.length - nowLength
           let char = style.substring(i, i + 1) || ' '
           currentStyle += char
           this.setState({ styleTextDom: Prism.highlight(currentStyle, Prism.languages.css) })
           this.refs.styleEditor.scrollTop = this.refs.styleEditor.scrollHeight
           setTimeout(showStyle, interval)
         } else {
+          //重置一下长度
+          allLength =0
           resolve()
         }
       }).bind(this)
