@@ -152,7 +152,7 @@ const resume = `jkb
 `
 var currentStyle = ''
 var currentMarkdown = ''
-let speed = 25
+let speed = 10
 let nowLength = 0
 let allLength = 0
 
