@@ -131,10 +131,10 @@ html{
 ]
 const resume = `个人信息
 ----
-姓名：靳凯博<br>
+姓名：jkb<br>
 性别：男<br>
 学历：天津理工大学软件工程专业，本科2017届<br>
-电话：18622464594 邮箱：jkbspin777@gmail.com<br>
+邮箱：jkbspin777@gmail.com<br>
 
 技能
 ----
